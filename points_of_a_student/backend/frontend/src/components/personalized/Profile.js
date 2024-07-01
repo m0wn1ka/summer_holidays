@@ -23,9 +23,9 @@ export default function Profile() {
         <img src={human} alt="human logo" className="rounded-full w-24 h-24 p-2" />
         <div className='container' style={{"marginLeft":"20vh"}}>
             <div >
-                  name:   {userData.name} <br />
+                  {/* name:   {userData.name} <br /> */}
             
-                   email:    {userData.email} @gmail.com
+                   email:    {userData.email}
             </div>
         </div>
     </div> : <>hi</>

@@ -8,7 +8,8 @@ router.post("/",async(req,res)=>{
     // console.log("req.body in profiel ",req.body)
 
     let user1= await UserModel.findOne({email:req.userEmail.user});
-    let result={"name":user1.name,"email":"user1.email"}
+    // console.log("user email ::",user1.email)
+    let result={"name":user1.name,"email":user1.email}
     return res.status(200).json(result)
 })
 module.exports=router
