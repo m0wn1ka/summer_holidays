@@ -1,61 +1,76 @@
-import { useEffect, useState } from "react";
-import human from "../images/human.jpeg"
-import axios from 'axios'
+import { useEffect, useState, useContext } from "react";
+import human from "../images/human.jpeg";
+import axios from 'axios';
 import { config } from "./../../config";
-import { useContext } from "react";
-import { stateContext,stateDispatchContext } from '../contextAPI/Context1';
+import { stateContext, stateDispatchContext } from '../contextAPI/Context1';
 import { useNavigate } from "react-router-dom";
-export default function Login(){
-    // console.log("in login bakc  ulr is",config1)
-    const navigate = useNavigate();
-    const dispatch=useContext(stateDispatchContext);
-    const state1=useContext(stateContext)
-    const [userData,setUserData]=useState({email:"",password:""})
-    function onChangeHandler(e){
-        // window.alert("cac")
-        setUserData((userData)=>({...userData,[e.target.name]:e.target.value}))
+import "./Login.css"; // Import the CSS file for custom styles
+
+export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useContext(stateDispatchContext);
+  const state1 = useContext(stateContext);
+  const [userData, setUserData] = useState({ email: "", password: "" });
+
+  function onChangeHandler(e) {
+    setUserData((userData) => ({ ...userData, [e.target.name]: e.target.value }));
+  }
+
+  useEffect(() => {
+    if (state1.authorized) {
+      navigate("/profile");
     }
-    useEffect(()=>{
-        if(state1.authorized){
-            navigate("/profile")
-        }
-    })
-    async function onSubmitHandler(e){
-        e.preventDefault()
-        window.alert("checking your creds....")
-        // console.log("value..",userData)
-        let headers= {'Content-Type': 'application/json'}
-        let body=userData
-        // console.log("backend url from proce.env.url",process.env.BACKEND_URL)
-        //  body={"email":"email2","name":"name2","passowrd":"pass2"}
-        let response=await axios.post(config+ "/auth/login",body=body,headers=headers)
-        // console.log("response of logn is",response.status)
-        // console.log("token:",response.data.token)
-        if(response.status==200 && response.data.token){
-            navigate("/profile")
-            dispatch({
-                type: 'LoginSuccess',
-                
-                text: response.data.token,
-              }); 
-        }
-        else{
+  }, [state1, navigate]);
 
-          window.alert("incorrect login try again")
-            dispatch({
-                type:"LoginFail"
-            })
-        }
+  async function onSubmitHandler(e) {
+    e.preventDefault();
+    window.alert("Checking your credentials...");
+    let headers = { 'Content-Type': 'application/json' };
+    let body = userData;
 
+    try {
+      let response = await axios.post(config + "/auth/login", body, { headers: headers });
+      if (response.status === 200 && response.data.token) {
+        navigate("/profile");
+        dispatch({
+          type: 'LoginSuccess',
+          text: response.data.token,
+        });
+      } else {
+        window.alert("Incorrect login, try again.");
+        dispatch({
+          type: "LoginFail"
+        });
+      }
+    } catch (e) {
+      window.alert("Contact admin");
     }
-    return(<>
-    <form className="h-screen flex flex-col items-center justify-center" onSubmit={(e)=>onSubmitHandler(e)}>
-        <img src={human} alt="human logo" className="rounded-full w-24 h-24"/>
-     email:<input type="email" value={userData.email} name="email" onChange={(e)=>onChangeHandler(e)} className="text-blue-600"/><br/>
-       password:<input type="password" value={userData.password} name="password" onChange={(e)=>onChangeHandler(e)} className="text-blue-600"/><br/>
-      <button>submit</button>
+  }
 
-    </form>
-    
-    </>)
+  return (
+    <div className="h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(https://img.jagranjosh.com/images/2023/January/212023/Universities.jpg)` }}>
+      <div className="container mx-auto px-4">
+        <form className="glass max-w-md mx-auto shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center" onSubmit={(e) => onSubmitHandler(e)}>
+          <img src={human} alt="human logo" className="rounded-full w-24 h-24 mb-4" />
+          <div className="mb-4 w-full">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
+              Email
+            </label>
+            <input type="email" value={userData.email} name="email" onChange={(e) => onChangeHandler(e)} className="border-4 border-light-blue-500 border-opacity-100 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div className="mb-6 w-full">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
+            <input type="password" value={userData.password} name="password" onChange={(e) => onChangeHandler(e)} className="border-4 border-light-blue-500 border-opacity-100 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div className="flex items-center justify-center">
+            <button className="bg-dark-gray hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
