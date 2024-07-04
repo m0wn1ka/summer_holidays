@@ -21,7 +21,7 @@ body {
   }
   
   .navbar-nav .nav-link:hover {
-    color: #00bfff;
+    color: hsl(195, 67%, 56%);
   }
   
   .navbar-nav .nav-item {

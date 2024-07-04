@@ -38,13 +38,13 @@ export default function Register() {
                     <div className="flex justify-center mb-4">
                         <img src={human} alt="human logo" className="rounded-full w-24 h-24" />
                     </div>
-                    <div className='mb-4'>
+                    {/* <div className='mb-4'>
                         <label className='block text-white text-sm font-bold mb-2' htmlFor='name'>
                             Name
                         </label>
                         <input type='text' value={userData.name} name="name" onChange={(e) => onChangeHandler(e)}
                                className='border-4 border-light-blue-500 border-opacity-100 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
-                    </div>
+                    </div> */}
                     <div className='mb-4'>
                         <label className='block text-white text-sm font-bold mb-2' htmlFor='email'>
                             Email

@@ -30,22 +30,17 @@ function App() {
     Reducer1,
     initialState1
   );
-  console.log("env value is",process.env.REACT_APP_test_var)
   return (
     <div className="App h-screen font-mono">
         <BrowserRouter>
         <stateContext.Provider value={state1}>
-          <stateDispatchContext.Provider value={dispatch}>
-
-          
+          <stateDispatchContext.Provider value={dispatch}>          
         <Navbar/>
-        {/* <Logout/> */}
         <RoutesSelf />
-      
         </stateDispatchContext.Provider>
-
         </stateContext.Provider> 
      </BrowserRouter>
+     
     </div>
   );
 }

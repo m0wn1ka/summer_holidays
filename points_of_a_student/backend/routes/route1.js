@@ -8,9 +8,12 @@ const {ObjectId}=require("mongodb")
 router.post("/", async (req, res) => {
     console.log("in route1");
     let exists=await PointsModel.findOne({IdNumber:req.body.studentId})
+    console.log("line 1")
     if(exists!=null){
-        return res.json({"points":"your points already calculated!(issues? contact admin)"})
+      console.log("secrettt",exists)
+        return res.json({"points":exists.Points})
     }
+    console.log("line 2")
     // const scriptPath = "C:\\home\\radha\\Documents\\summer_holidays\\points_of_a_student\\backend\\routes\\py1.py";
     const scriptPath=__dirname+"/main_calc.py"
     const x = spawn("python", [scriptPath,req.body.studentId,req.body.studentpass]);
@@ -21,7 +24,8 @@ router.post("/", async (req, res) => {
         const objectId = new ObjectId();
         let idnumber="N"+req.body.studentId.slice(1)
         const user1=new PointsModel({_id:objectId,IdNumber:idnumber,Points:data})
-       await user1.save()
+       await user1.save() 
+       console.log("line 3")
        let email="n".concat(req.body.studentId.slice(1))
        email=email.concat("@rguktn.ac.in");
        const transporter = nodemailer.createTransport({
@@ -42,7 +46,7 @@ router.post("/", async (req, res) => {
         text:text
      
       };
-
+      console.log("line 4")
       try{
         const result=await transporter.sendMail(mailOptions);
         console.log(result)
@@ -51,14 +55,15 @@ router.post("/", async (req, res) => {
         // res.status(500).json({ error: 'Failed to send email' });
         console.log("fail of mail")
         console.log(err)
-
+        console.log("line 5")
       }
 
         return res.json({"points":data})
     });
 
     x.stderr.on("data", (data) => {
-        // console.error(`stderr: ${data}`);
+      console.log("line 6")
+        console.error(`stderr: ${data}`);
         return res.status(500).send("Error executing script");
     });
 
@@ -68,6 +73,7 @@ router.post("/", async (req, res) => {
     // });
 
     x.on("error", (error) => {
+      console.log("line 7")
         // console.error(`Failed to start subprocess: ${error.message}`);
         return res.status(500).send(error.toString());
     });

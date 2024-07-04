@@ -23,7 +23,7 @@ export default function Student() {
             let response = await axios.post(config + "/route1", body, { headers: headers });
 
             if (response.status === 200) {
-                window.alert("Successfully retrieved data from /route1");
+                // window.alert("Successfully retrieved data from /route1");
                 console.log("Response Data:", response.data);
                 setHasPoints(true);
                 setAnswer(response.data.points);
@@ -68,7 +68,7 @@ export default function Student() {
                     </form>
                 ) : (
                     <div className='glass max-w-md mx-auto shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-                        <p className='text-center text-3xl font-bold text-gray-800'>{answer}</p>
+                        <p className='text-center text-3xl font-bold text-gray-800'>your grade :{answer}</p>
                     </div>
                 )}
             </div>
