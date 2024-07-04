@@ -9,11 +9,12 @@ url1="https://examcell.rguktn.ac.in/results/202122_19E1_S1_Reg/"
 url2="https://examcell.rguktn.ac.in/results/202122_19E1_S2_Reg/"
 url3="https://examcell.rguktn.ac.in/results/202223_19E2_S1_Reg/"
 url4="https://examcell.rguktn.ac.in/results/202223_19E2_S1_Reg/"
-urls=[url1,url2,url3,url4]
+url5="https://examcell.rguktn.ac.in/results/202324_19E3_S1_Reg/"
+urls=[url1,url2,url3,url4,url5]
 # urls=[url1]
 final1=0
 for i in urls:
     ans1=grade_calc(studentId,studentpass,i)
     # print("a:",ans1)
     final1+=ans1
-print(round(final1/4,3))
+print(round(final1/5,3))
